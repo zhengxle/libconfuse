@@ -54,25 +54,25 @@
 #define PACKAGE "confuse"
 
 /* Define to the address where bug reports for this package should be sent. */
-#define PACKAGE_BUGREPORT "confuse-devel@nongnu.org"
+#define PACKAGE_BUGREPORT "https://github.com/martinh/libconfuse/issues"
 
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "libConfuse"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "libConfuse 2.7"
+#define PACKAGE_STRING "libConfuse 2.9-beta1"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "confuse"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "2.7"
+#define PACKAGE_VERSION "2.9-beta1"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "2.7"
+#define VERSION "2.9-beta1"
 
 /* Define to 1 if `lex' declares `yytext' as a `char *' by default, not a
    `char[]'. */
@@ -83,3 +83,12 @@
 
 /* Define to 1 if you have the strndup function */
 /*#undef HAVE_STRNDUP */
+
+/* Define to 1 if you have the `setenv' function. */
+/* #undef HAVE_SETENV */
+
+/* Define to 1 if you have the `unsetenv' function. */
+/* #undef HAVE_UNSETENV */
+
+/* Define to 1 if you have the `_putenv' function. */
+#define HAVE__PUTENV 1

@@ -1,7 +1,7 @@
-EXTRA_DIST = simple.conf reread.conf ftp.conf
-noinst_PROGRAMS = simple reread ftpconf
-INCLUDES = -I$(top_srcdir)/src
-AM_LDFLAGS = -L../src/
-LDADD = ../src/libconfuse.la
-CLEANFILES=*~ \#*\#
-LIBS = $(LTLIBINTL)
+EXTRA_DIST      = simple.conf reread.conf ftp.conf test.conf nested.conf deprecated.conf
+noinst_PROGRAMS = simple reread ftpconf cfgtest cli nested deprecated addsec
+AM_CPPFLAGS     = -I$(top_srcdir)/src
+AM_LDFLAGS      = -L../src/
+LIBS            = $(LTLIBINTL)
+LDADD           = ../src/libconfuse.la
+CLEANFILES      = *~ \#*\#

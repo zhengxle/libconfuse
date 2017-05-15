@@ -2,24 +2,18 @@ dnl Process this file with -*- autoconf -*- to produce a configure script.
 
 AC_PREREQ(2.50)
 
-AC_INIT(libConfuse, 2.7, confuse-devel@nongnu.org, confuse)
+AC_INIT(libConfuse, 3.1-beta1, https://github.com/martinh/libconfuse/issues, confuse)
 AC_CONFIG_AUX_DIR(support)
 AM_MAINTAINER_MODE
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([foreign dist-xz])
+AM_SILENT_RULES([no])
+
 AM_CONFIG_HEADER(config.h)
 AC_CONFIG_SRCDIR(src/confuse.c)
 
 # Checks for programs.
-# disable unnecessary compiler checks
-AC_DEFUN([AC_PROG_F77], [:])
-AC_DEFUN([AC_PROG_FC], [:])
-AC_DEFUN([AC_PROG_CXX], [:])
-AC_DEFUN([AC_PROG_CXXCPP], [:])
-AC_DEFUN([AC_PROG_OBJC], [:])
-AC_DEFUN([AC_PROG_OBJCCPP], [:])
-AC_DEFUN([AC_LIBTOOL_CXX], [:])
-AC_DEFUN([AC_LIBTOOL_F77], [:])
 AC_PROG_CC
+AM_PROG_AR
 AM_PROG_LEX
 
 LT_INIT([win32-dll])
@@ -30,8 +24,13 @@ AC_ARG_ENABLE([examples],
 	[], [enable_examples=yes])
 AM_CONDITIONAL([ENABLE_EXAMPLES], [test "$enable_examples" = yes])
 
+# 0.18.2.1 updates AM_GNU_GETTEXT() to use AC_PROG_MKDIR_P instead of
+# AM_PROG_MKDIR_P, but 0.18.1.1 is included in Ubuntu 12.04 LTS.
+# Fortunately Ubuntu 14.04 LTS ships 0.18.3.1 and Debian Jessie 0.19.3
+# Unfortunately CentOS7, RHEL7 ships 0.18.2.1, so for best compat.
+# level at this point in time we set 0.18.2.
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION([0.16.1])
+AM_GNU_GETTEXT_VERSION([0.18.2])
 
 # Checks for header files.
 AC_HEADER_STDC
@@ -42,11 +41,12 @@ AC_CHECK_HEADERS([sys/stat.h])
 AC_C_CONST
 
 # Checks for library functions.
-AC_CHECK_FUNCS([strcasecmp strdup strndup])
+AC_CHECK_FUNCS([fmemopen strcasecmp strdup strndup setenv unsetenv _putenv])
 
-dnl Check for the library containing inet_aton/inet_ntoa (for tests)
-AC_SEARCH_LIBS([inet_ntoa], [socket nsl])
+# Set conditional includes in Makefile.am
+AM_CONDITIONAL(MISSING_FMEMOPEN, [test "x$ac_cv_func_fmemopen" = "xno"])
 
+# Files to generate
 AC_CONFIG_FILES([Makefile \
 		 src/Makefile \
 		 examples/Makefile \
